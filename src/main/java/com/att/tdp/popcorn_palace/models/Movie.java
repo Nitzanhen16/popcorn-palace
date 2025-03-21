@@ -10,7 +10,8 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // Auto-incremented ID
     private Long id;
 
-    @Column(nullable = false, unique = true)  // "title" column, cannot be null
+    // Since we enable update and delete by Movie title, title should be unique and not null
+    @Column(nullable = false, unique = true)
     private String title;
 
     @Column
@@ -38,10 +39,6 @@ public class Movie {
     }
 
     // Getters and Setters
-    public Long getId() {
-        return id;
-    }
-
     public String getTitle() {
         return title;
     }
