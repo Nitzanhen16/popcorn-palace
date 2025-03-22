@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface ShowtimeRepository extends JpaRepository<Showtime, Long> {
-
+    // Custom query to find a showtime by theaterId and with overlapping startTime and/or endTime
     @Query("SELECT s FROM Showtime s " +
             "WHERE s.theater.id = :theaterId " +
             "AND s.startTime < :endTime " +

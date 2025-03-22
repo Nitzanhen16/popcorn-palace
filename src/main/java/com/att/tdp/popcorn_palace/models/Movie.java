@@ -40,11 +40,11 @@ public class Movie {
     public Movie() {
     }
 
+    // Getters and Setters
     public Long getId() {
         return id;
     }
 
-    // Getters and Setters
     public String getTitle() {
         return title;
     }

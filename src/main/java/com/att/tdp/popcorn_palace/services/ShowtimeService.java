@@ -30,10 +30,15 @@ public class ShowtimeService {
         this.theaterRepository = theaterRepository;
     }
 
+    public Showtime getShowtimeEntityById(Long id) {
+        // Find and retrieve showtime by id
+        return showtimeRepository.findById(id)
+                .orElseThrow(() -> new ShowtimeNotFoundException(id));
+    }
+
     public ShowtimeResponse getShowtimeById(Long id) {
         // Find and retrieve showtime by id
-        Showtime showtime = showtimeRepository.findById(id)
-                .orElseThrow(() -> new ShowtimeNotFoundException(id));
+        Showtime showtime = getShowtimeEntityById(id);
         return convertShowtimeToShowtimeResponse(showtime);
     }
 
@@ -42,7 +47,7 @@ public class ShowtimeService {
         checkShowtimeDates(showtimeRequest.getStartTime(), showtimeRequest.getEndTime());
 
         // Check if movie.id exists in the DB
-        Movie movie = movieService.getMovieById(showtimeRequest.getMovieId());
+        Movie movie = movieService.getMovieEntityById(showtimeRequest.getMovieId());
 
         // Get Theater by name or created it if it's not found
         String theaterName = showtimeRequest.getTheaterName();
@@ -86,7 +91,7 @@ public class ShowtimeService {
         // Check if movie.id has changed
         if (!existingShowtime.getMovie().getId().equals(showtimeRequest.getMovieId())) {
             // Check if the udpated movie.id exists in the DB
-            Movie movie = movieService.getMovieById(showtimeRequest.getMovieId());
+            Movie movie = movieService.getMovieEntityById(showtimeRequest.getMovieId());
 
             // Update showtime movie
             existingShowtime.setMovie(movie);

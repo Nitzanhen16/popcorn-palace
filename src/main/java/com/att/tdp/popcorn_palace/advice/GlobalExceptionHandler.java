@@ -78,15 +78,6 @@ public class GlobalExceptionHandler {
         return response;
     }
 
-    // Handle Invalid Movie Exception
-    @ExceptionHandler(MovieInvalidInput.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, String> handleInvalidMovie(MovieInvalidInput ex) {
-        Map<String, String> response = new HashMap<>();
-        response.put("error", ex.getMessage());
-        return response;
-    }
-
     /* SHOWTIME HANDLERS */
 
     // Handle Showtime Not Found Exception
@@ -109,6 +100,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ShowtimeOverlapException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public Map<String, String> handleShowtimeOverlapException(ShowtimeOverlapException ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("error", ex.getMessage());
+        return response;
+    }
+
+    @ExceptionHandler(BookingAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public Map<String, String> handleBookingAlreadyExistsException(BookingAlreadyExistsException ex) {
         Map<String, String> response = new HashMap<>();
         response.put("error", ex.getMessage());
         return response;
