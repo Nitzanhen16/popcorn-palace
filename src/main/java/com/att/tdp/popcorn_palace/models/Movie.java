@@ -2,6 +2,8 @@ package com.att.tdp.popcorn_palace.models;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+
 
 @Entity
 @Table(name = "movie")
@@ -21,13 +23,13 @@ public class Movie {
     private int duration;
 
     @Column
-    private double rating;
+    private BigDecimal rating;
 
     @Column
     private String releaseYear;
 
     // Constructors
-    public Movie(String title, String genre, int duration, double rating, String releaseYear) {
+    public Movie(String title, String genre, int duration, BigDecimal rating, String releaseYear) {
         this.title = title;
         this.genre = genre;
         this.duration = duration;
@@ -36,6 +38,10 @@ public class Movie {
     }
 
     public Movie() {
+    }
+
+    public Long getId() {
+        return id;
     }
 
     // Getters and Setters
@@ -63,11 +69,11 @@ public class Movie {
         this.duration = duration;
     }
 
-    public double getRating() {
+    public BigDecimal getRating() {
         return rating;
     }
 
-    public void setRating(double rating) {
+    public void setRating(BigDecimal rating) {
         this.rating = rating;
     }
 

@@ -1,6 +1,6 @@
 package com.att.tdp.popcorn_palace.services;
 
-import com.att.tdp.popcorn_palace.exceptions.InvalidMovieException;
+import com.att.tdp.popcorn_palace.exceptions.MovieInvalidInput;
 import com.att.tdp.popcorn_palace.exceptions.MovieAlreadyExistsException;
 import com.att.tdp.popcorn_palace.exceptions.MovieNotFoundException;
 import com.att.tdp.popcorn_palace.models.Movie;
@@ -19,6 +19,11 @@ public class MovieService {
         this.movieRepository = movieRepository;
     }
 
+    public Movie getMovieById(Long id) {
+        return movieRepository.findById(id)
+                .orElseThrow(() -> new MovieNotFoundException(id));
+    }
+
     public Movie createMovie(Movie movie) {
         // Check if Movie with this title already exists in the DB
         if (movieRepository.existsByTitle(movie.getTitle())) {
@@ -27,7 +32,7 @@ public class MovieService {
 
         // Check if Movie title is an actual string
         if (movie.getTitle() == null || movie.getTitle().trim().isEmpty()) {
-            throw new InvalidMovieException("Movie Title cannot be empty");
+            throw new MovieInvalidInput("Movie Title cannot be empty");
         }
         return movieRepository.save(movie);
     }
