@@ -23,13 +23,13 @@ public class ShowtimeController {
     }
 
     @PostMapping
-    public ShowtimeResponse addShowtime(@Valid @RequestBody ShowtimeRequest requestDTO) {
-        return showtimeService.createShowtime(requestDTO);
+    public ShowtimeResponse addShowtime(@Valid @RequestBody ShowtimeRequest showtimeRequest) {
+        return showtimeService.createShowtime(showtimeRequest);
     }
 
     @PostMapping("/update/{showtimeId}")
-    public void updateShowtime(@PathVariable Long showtimeId, @Valid @RequestBody ShowtimeRequest requestDTO) {
-        showtimeService.updateShowtime(showtimeId, requestDTO);
+    public void updateShowtime(@PathVariable Long showtimeId, @Valid @RequestBody ShowtimeRequest showtimeRequest) {
+        showtimeService.updateShowtime(showtimeId, showtimeRequest);
     }
 
     @DeleteMapping("/{showtimeId}")

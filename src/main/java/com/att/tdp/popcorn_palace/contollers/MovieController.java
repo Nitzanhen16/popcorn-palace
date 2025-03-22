@@ -1,7 +1,10 @@
 package com.att.tdp.popcorn_palace.contollers;
 
+import com.att.tdp.popcorn_palace.dtos.MovieRequest;
+import com.att.tdp.popcorn_palace.dtos.MovieResponse;
 import com.att.tdp.popcorn_palace.models.Movie;
 import com.att.tdp.popcorn_palace.services.MovieService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -18,18 +21,18 @@ public class MovieController {
     }
 
     @GetMapping
-    public List<Movie> getAllMovies() {
+    public List<MovieResponse> getAllMovies() {
         return movieService.getAllMovies();
     }
 
     @PostMapping
-    public Movie addMovie(@RequestBody Movie movie) {
-        return movieService.createMovie(movie);
+    public MovieResponse addMovie(@Valid @RequestBody MovieRequest movieRequest) {
+        return movieService.createMovie(movieRequest);
     }
 
     @PostMapping("/update/{movieTitle}")
-    public void updateMovie(@PathVariable String movieTitle, @RequestBody Movie movie) {
-        movieService.updateMovie(movieTitle, movie);
+    public void updateMovie(@PathVariable String movieTitle, @Valid @RequestBody MovieRequest movieRequest) {
+        movieService.updateMovie(movieTitle, movieRequest);
     }
 
     @DeleteMapping("/{movieTitle}")

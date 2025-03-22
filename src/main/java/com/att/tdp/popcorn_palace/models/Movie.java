@@ -20,7 +20,7 @@ public class Movie {
     private String genre;
 
     @Column
-    private int duration;
+    private Integer duration;
 
     @Column
     private BigDecimal rating;
@@ -29,7 +29,7 @@ public class Movie {
     private String releaseYear;
 
     // Constructors
-    public Movie(String title, String genre, int duration, BigDecimal rating, String releaseYear) {
+    public Movie(String title, String genre, Integer duration, BigDecimal rating, String releaseYear) {
         this.title = title;
         this.genre = genre;
         this.duration = duration;
@@ -61,11 +61,11 @@ public class Movie {
         this.genre = genre;
     }
 
-    public int getDuration() {
+    public Integer getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(Integer duration) {
         this.duration = duration;
     }
 

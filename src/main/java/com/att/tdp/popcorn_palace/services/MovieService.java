@@ -1,5 +1,7 @@
 package com.att.tdp.popcorn_palace.services;
 
+import com.att.tdp.popcorn_palace.dtos.MovieRequest;
+import com.att.tdp.popcorn_palace.dtos.MovieResponse;
 import com.att.tdp.popcorn_palace.exceptions.MovieInvalidInput;
 import com.att.tdp.popcorn_palace.exceptions.MovieAlreadyExistsException;
 import com.att.tdp.popcorn_palace.exceptions.MovieNotFoundException;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MovieService {
@@ -24,46 +27,81 @@ public class MovieService {
                 .orElseThrow(() -> new MovieNotFoundException(id));
     }
 
-    public Movie createMovie(Movie movie) {
+    public MovieResponse createMovie(MovieRequest movieRequest) {
         // Check if Movie with this title already exists in the DB
-        if (movieRepository.existsByTitle(movie.getTitle())) {
-            throw new MovieAlreadyExistsException(movie.getTitle());
+        if (movieRepository.existsByTitle(movieRequest.getTitle())) {
+            throw new MovieAlreadyExistsException(movieRequest.getTitle());
         }
 
         // Check if Movie title is an actual string
-        if (movie.getTitle() == null || movie.getTitle().trim().isEmpty()) {
+        if (movieRequest.getTitle() == null || movieRequest.getTitle().trim().isEmpty()) {
             throw new MovieInvalidInput("Movie Title cannot be empty");
         }
-        return movieRepository.save(movie);
+        Movie movie = convertMovieRequestToMovie(movieRequest);
+        movieRepository.save(movie);
+        return convertMovieToMovieResponse(movie);
     }
 
-    public List<Movie> getAllMovies() {
+    public List<MovieResponse> getAllMovies() {
         // Find and retrieve all movies from DB
-        return movieRepository.findAll();
+        return movieRepository.findAll().stream()
+                .map(this::convertMovieToMovieResponse)
+                .collect(Collectors.toList());
     }
 
-    public void updateMovie(String movieTitle, Movie movieUpdated) {
+    public void updateMovie(String movieTitle, MovieRequest movieRequest) {
         // Check if there is a movie with the given title in the DB
         Movie movie = movieRepository.findByTitle(movieTitle)
                 .orElseThrow(() -> new MovieNotFoundException(movieTitle));
 
         // Check if the title in the request is a title of a movie that already exists in the DB
-        if (movieRepository.existsByTitle(movieUpdated.getTitle())) {
-            throw new MovieAlreadyExistsException(movieUpdated.getTitle());
+        if (movieRepository.existsByTitle(movieRequest.getTitle())) {
+            throw new MovieAlreadyExistsException(movieRequest.getTitle());
         }
 
-        // update movie values with the request
-        movie.setTitle(movieUpdated.getTitle());
-        movie.setGenre(movieUpdated.getGenre());
-        movie.setDuration(movieUpdated.getDuration());
-        movie.setRating(movieUpdated.getRating());
-        movie.setReleaseYear(movieUpdated.getReleaseYear());
+
+        // Update movie with the values received in the request
+        movie.setTitle(movieRequest.getTitle());
+        if (movieRequest.getGenre() != null) {
+            movie.setGenre(movieRequest.getGenre());
+        }
+        if (movieRequest.getDuration() != null) {
+            movie.setDuration(movieRequest.getDuration());
+        }
+        if (movieRequest.getRating() != null) {
+            movie.setRating(movieRequest.getRating());
+        }
+        if (movieRequest.getReleaseYear() != null) {
+            movie.setReleaseYear(movieRequest.getReleaseYear());
+        }
         movieRepository.save(movie);
     }
 
     public void deleteMovie(String movieTitle) {
+        // Delete movie by title
         Movie movie = movieRepository.findByTitle(movieTitle)
                 .orElseThrow(() -> new MovieNotFoundException(movieTitle));
         movieRepository.delete(movie);
+    }
+
+    private MovieResponse convertMovieToMovieResponse(Movie movie) {
+        return new MovieResponse(
+                movie.getId(),
+                movie.getTitle(),
+                movie.getGenre(),
+                movie.getDuration(),
+                movie.getRating(),
+                movie.getReleaseYear()
+        );
+    }
+
+    private Movie convertMovieRequestToMovie(MovieRequest movieRequest) {
+        return new Movie(
+                movieRequest.getTitle(),
+                movieRequest.getGenre(),
+                movieRequest.getDuration(),
+                movieRequest.getRating(),
+                movieRequest.getReleaseYear()
+        );
     }
 }
