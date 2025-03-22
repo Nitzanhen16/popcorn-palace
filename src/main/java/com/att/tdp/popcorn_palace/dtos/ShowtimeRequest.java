@@ -1,5 +1,6 @@
 package com.att.tdp.popcorn_palace.dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -11,6 +12,7 @@ public class ShowtimeRequest {
     @NotNull(message = "Movie id is required")
     private Long movieId;
 
+    @JsonProperty("theater")
     @NotBlank(message = "Theater name is required")
     private String theater;
 
@@ -28,8 +30,8 @@ public class ShowtimeRequest {
     public Long getMovieId() { return movieId; }
     public void setMovieId(Long movieId) { this.movieId = movieId; }
 
-    public String getTheater() { return theater; }
-    public void setTheater(String theater) { this.theater = theater; }
+    public String getTheaterName() { return theater; }
+    public void setTheaterName(String theater) { this.theater = theater; }
 
     public LocalDateTime getStartTime() { return startTime; }
     public void setStartTime(LocalDateTime startTime) { this.startTime = startTime; }

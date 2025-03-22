@@ -14,8 +14,6 @@ public class ShowtimeResponse {
     private BigDecimal price;
 
     // Constructors
-    public ShowtimeResponse() {}
-
     public ShowtimeResponse(Long id, Long movieId, String theater,
                                LocalDateTime startTime, LocalDateTime endTime, BigDecimal price) {
         this.id = id;
@@ -33,8 +31,8 @@ public class ShowtimeResponse {
     public Long getMovieId() { return movieId; }
     public void setMovieId(Long movieId) { this.movieId = movieId; }
 
-    public String getTheater() { return theater; }
-    public void setTheater(String theater) { this.theater = theater; }
+    public String getTheaterName() { return theater; }
+    public void setTheaterName(String theater) { this.theater = theater; }
 
     public LocalDateTime getStartTime() { return startTime; }
     public void setStartTime(LocalDateTime startTime) { this.startTime = startTime; }

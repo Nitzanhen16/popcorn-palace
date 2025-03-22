@@ -35,13 +35,12 @@ public class GlobalExceptionHandler {
         Throwable rootCause = ex.getCause();
         String errorMessage = "Malformed JSON request";
 
-        if (rootCause instanceof InvalidFormatException) {
-            InvalidFormatException ife = (InvalidFormatException) rootCause;
+        if (rootCause instanceof InvalidFormatException ife) {
             if (ife.getTargetType() == LocalDateTime.class) {
                 errorMessage = "Invalid date-time format or value: " + ife.getValue() +
                         ". Expected format: 'yyyy-MM-dd'T'HH:mm:ss.SSSSSS'";
             } else {
-                String fieldName = ife.getPath().isEmpty() ? "Unknown Field" : ife.getPath().get(0).getFieldName();
+                String fieldName = ife.getPath().isEmpty() ? "Unknown Field" : ife.getPath().getFirst().getFieldName();
                 String expectedType = mapToSimpleType(ife.getTargetType());
                 String receivedValue = ife.getValue().toString();
 
@@ -94,6 +93,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ShowtimeNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Map<String, String> handleShowtimeNotFound(ShowtimeNotFoundException ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("error", ex.getMessage());
+        return response;
+    }
+
+    @ExceptionHandler(InvalidDateException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleInvalidDateException(InvalidDateException ex) {
         Map<String, String> response = new HashMap<>();
         response.put("error", ex.getMessage());
         return response;
