@@ -144,7 +144,8 @@ mvn test
 ## Additional Information
 please check out **docs** directory, it includes some additional files, that aren't part of the code scope
 
-1. **JSON collections**: a file that can be imported into Postman to conveniently enable further testing of my project
+1. **API documentation**: S JSON collections file that can be imported into Postman, holds the entire API documentation and conveniently enables further testing of my project
+2. 1. **roadmap.md**: A document that outlines the planned improvements and features to be added to the project.
 
 
 ---
