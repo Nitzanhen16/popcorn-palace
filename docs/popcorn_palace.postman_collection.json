@@ -15,16 +15,18 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/movies",
+							"raw": "http://localhost:8080/movies/all",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"movies"
+								"movies",
+								"all"
 							]
-						}
+						},
+						"description": "### Get all Movies\n\nThis endpoint retrieves a list of movies.\n\n#### Request\n\n- Method: GET\n    \n- URL: `http://localhost:8080/movies/all`\n    \n\n#### Response\n\nThe response will contain an array of movie objects, each containing details such as title, genre, release date, and director.\n\n#### Example Response:\n\n``` json\n[\n    {\n        \"title\": \"Movie Title\",\n        \"genre\": \"Action\",\n        \"releaseDate\": \"YYYY-MM-DD\",\n        \"director\": \"Director Name\"\n    },\n    {\n        \"title\": \"Another Movie\",\n        \"genre\": \"Comedy\",\n        \"releaseDate\": \"YYYY-MM-DD\",\n        \"director\": \"Another Director\"\n    }\n]\n\n ```"
 					},
 					"response": []
 				},
@@ -52,7 +54,8 @@
 							"path": [
 								"movies"
 							]
-						}
+						},
+						"description": "### Add a Movie\n\nThis endpoint allows you to add a new movie to the database.\n\n#### Request\n\n- Method: Post\n    \n- URL: `http://localhost:8080/movies`\n    \n- { \"title\": \"Titanic\", \"genre\": \"Drama\", \"duration\": 194, \"rating\": 7.9, \"releaseYear\": \"1997\"}\n    \n\n#### Fields\n\n- `title` (string): The title of the movie.\n    \n- `genre` (string): The genre of the movie.\n    \n- `duration` (integer): The duration of the movie in minutes.\n    \n- `rating` (number): The rating of the movie.\n    \n- `releaseYear` (string): The release year of the movie.\n    \n\n#### Validations\n\n- The `title` field is required.\n    \n- The `duration` field should be a positive integer.\n    \n- The `rating` field should be a number between 0 and 10.\n    \n- The `releaseYear` field should be a valid year in the format \"YYYY\".\n    \n\n#### Example Request\n\n``` json\n{\n  \"title\": \"Titanic\",\n  \"genre\": \"Drama\",\n  \"duration\": 194,\n  \"rating\": 7.9,\n  \"releaseYear\": \"1997\"\n}\n\n ```\n\n#### Response (JSON Schema)\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"id\": {\n      \"type\": \"string\"\n    },\n    \"title\": {\n      \"type\": \"string\"\n    },\n    \"genre\": {\n      \"type\": \"string\"\n    },\n    \"duration\": {\n      \"type\": \"integer\"\n    },\n    \"rating\": {\n      \"type\": \"number\"\n    },\n    \"releaseYear\": {\n      \"type\": \"string\"\n    }\n  }\n}\n\n ```"
 					},
 					"response": []
 				},
@@ -81,20 +84,14 @@
 								"movies",
 								"update",
 								"Titanic"
-							],
-							"query": [
-								{
-									"key": "movieTitle",
-									"value": null,
-									"disabled": true
-								}
 							]
-						}
+						},
+						"description": "### Update a Movie\n\nThis endpoint allows you to update an existing movie to the database.\n\n#### Request\n\n- Method: Post\n    \n- URL: `http://localhost:8080/movies/update/{movieTitle}`\n    \n\n#### **Fields**\n\n- `title` (string): The title of the movie.\n    \n- `genre` (string): The genre of the movie.\n    \n- `duration` (integer): The duration of the movie in minutes.\n    \n- `rating` (number): The rating of the movie.\n    \n- `releaseYear` (string): The release year of the movie.\n    \n\n#### Validations\n\n- The `title` field is required.\n    \n- The `duration` field should be a positive integer.\n    \n- The `rating` field should be a number between 0 and 10.\n    \n- The `releaseYear` field should be a valid year in the format \"YYYY\".\n    \n\n### Request Body\n\n- title (string) : The title of the movie.\n    \n- genre (string) : The genre of the movie.\n    \n- duration (number) : The duration of the movie in minutes.\n    \n- rating (number) : The rating of the movie.\n    \n- releaseYear (string) : The release year of the movie.\n    \n\n#### Example\n\n``` json\n{\n    \"title\": \"Titanic\",\n    \"genre\": \"Romance\",\n    \"duration\": 187,\n    \"rating\": 6.4,\n    \"releaseYear\": \"1999\"\n}\n\n ```\n\n#### Response\n\nThe response for this request is expected to be a status 200 with a Content-Type of text/xml."
 					},
 					"response": []
 				},
 				{
-					"name": "delete movie",
+					"name": "Delete a movie",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -118,7 +115,8 @@
 								"movies",
 								"Titanic"
 							]
-						}
+						},
+						"description": "### Delete a Movie\n\nThis endpoint allows you to update an existing movie to the database.\n\n#### Request\n\n- Method: Delete\n    \n- URL: `http://localhost:8080/movies/{movieTitle}`\n    \n\n#### Response\n\nThe response for this request is expected to be a status 200 with a Content-Type of text/xml."
 					},
 					"response": []
 				}
@@ -143,7 +141,8 @@
 								"showtimes",
 								"1"
 							]
-						}
+						},
+						"description": "### Get Showtimes\n\nThis endpoint retrieves the showtime details for a specific showtime ID.\n\n#### Request\n\n- Method: GET\n    \n- URL: `http://localhost:8080/showtimes/{showtimeId}`\n    \n\n#### Response\n\nThe response for this request is a JSON object conforming to the following schema:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"id\": {\n      \"type\": \"integer\"\n    },\n    \"movieId\": {\n      \"type\": \"integer\"\n    },\n    \"startTime\": {\n      \"type\": \"string\"\n    },\n    \"endTime\": {\n      \"type\": \"string\"\n    },\n    \"price\": {\n      \"type\": \"integer\"\n    },\n    \"theaterName\": {\n      \"type\": \"string\"\n    }\n  }\n}\n\n ```"
 					},
 					"response": []
 				},
@@ -171,7 +170,8 @@
 							"path": [
 								"showtimes"
 							]
-						}
+						},
+						"description": "### Create New Showtime\n\nThe `POST /showtimes` endpoint is used to create a new showtime for a movie at a specific theater.\n\n#### Request Body\n\n- `movieId` (number) - The ID of the movie for which the showtime is being created.\n    \n- `price` (number) - The price of the showtime ticket.\n    \n- `theater` (string) - The name of the theater where the showtime will take place.\n    \n- `startTime` (string) - The start time of the showtime in ISO 8601 format.\n    \n- `endTime` (string) - The end time of the showtime in ISO 8601 format.\n    \n\n#### Validations\n\n- all fields are required\n    \n- The `price` field should be a positive integer.\n    \n- The `endTime` must be after the `startTime` .\n    \n\n#### Example\n\n``` json\n{\n  \"movieId\": 5,\n  \"price\": \"45\",\n  \"theater\": \"Cinema City Glilot\",\n  \"startTime\": \"2025-04-18T20:30:00.000000Z\",\n  \"endTime\": \"2025-04-18T23:00:00.000000Z\"\n}\n\n ```\n\n#### Response\n\nThe response of this request is a JSON object representing the newly created showtime.\n\n``` json\n{\n  \"id\": 0,\n  \"movieId\": 0,\n  \"startTime\": \"\",\n  \"endTime\": \"\",\n  \"price\": 0,\n  \"theaterName\": \"\"\n}\n\n ```"
 					},
 					"response": []
 				},
@@ -182,7 +182,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"movieId\": 4,\r\n    \"price\": \"25\",\r\n    \"theater\": \"Cinema City Glilot\",\r\n    \"startTime\": \"2025-04-17T17:30:00.000000Z\",\r\n    \"endTime\": \"2025-04-17T20:00:00.000000Z\"\r\n}",
+							"raw": "{\r\n    \"movieId\": 2,\r\n    \"price\": \"25\",\r\n    \"theater\": \"Cinema City Glilot\",\r\n    \"startTime\": \"2025-04-17T17:30:00.000000Z\",\r\n    \"endTime\": \"2025-04-17T20:00:00.000000Z\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -201,7 +201,8 @@
 								"update",
 								"1"
 							]
-						}
+						},
+						"description": "### Update Showtimes\n\nThis endpoint allows the client to update the details of a specific showtime.\n\n#### Request\n\n- Method: POST\n    \n- Endpoint: `http://localhost:8080/showtimes/update/{showtimeId`\n    \n- { \"movieId\":4, \"price\":\"25\", \"theater\":\"Cinema City Glilot\", \"startTime\":\"2025-04-17T17:30:00.000000Z\", \"endTime\":\"2025-04-17T20:00:00.000000Z\"}\n    \n\n#### Response\n\nThe response for this request is expected to be a status 200 with a Content-Type of text/xml."
 					},
 					"response": []
 				},
@@ -230,7 +231,8 @@
 								"showtimes",
 								"1"
 							]
-						}
+						},
+						"description": "### Delete Showtime\n\nThis endpoint is used to delete a specific showtime by providing its ID in the URL.\n\n#### Request\n\n- Method: DELETE\n    \n- URL: `http://localhost:8080/showtimes/{showtimeID}`\n    \n\n#### Response\n\nThe response for this request is expected to be a status 200 with a Content-Type of text/xml."
 					},
 					"response": []
 				}
@@ -263,7 +265,8 @@
 							"path": [
 								"bookings"
 							]
-						}
+						},
+						"description": "### Add Booking\n\nThis endpoint allows the client to add a new booking by making an HTTP POST request to the specified URL.\n\n#### Request Body\n\n- `showtimeId` (number): The ID of the showtime for which the booking is being made.\n    \n- `seatNumber` (number): The number of the seat being booked.\n    \n- `userId` (string): The ID of the user making the booking.\n    \n\nExample Request Body:\n\n``` json\n{\n  \"showtimeId\": 1,\n  \"seatNumber\": 15,\n  \"userId\": \"84438967-f68f-4fa0-b620-0f0821...\"\n}\n\n ```\n\n#### Response\n\nThe response will contain the details of the newly created booking.\n\nExample Response:\n\n``` json\n{\n  \"bookingId\":\"d1a6423b-4469-4b00-8c5f-e3cfc42eacae\"\n}\n\n ```"
 					},
 					"response": []
 				}
