@@ -61,9 +61,9 @@ public class ShowtimeService {
             throw new ShowtimeOverlapException("Overlapping showtime exists for theater " + theaterName);
         }
 
+        // Save the new showtime in DB and return it
         Showtime showtime = convertShowtimeRequestToShowtime(showtimeRequest, movie, theater);
         showtimeRepository.save(showtime);
-
         return convertShowtimeToShowtimeResponse(showtime);
     }
 

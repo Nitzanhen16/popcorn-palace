@@ -22,6 +22,7 @@ public class MovieService {
     }
 
     public Movie getMovieEntityById(Long id) {
+        // Find and retrieve movie by id
         return movieRepository.findById(id)
                 .orElseThrow(() -> new MovieNotFoundException(id));
     }
@@ -32,6 +33,7 @@ public class MovieService {
             throw new MovieAlreadyExistsException(movieRequest.getTitle());
         }
 
+        // Save the new movie in DB and return it
         Movie movie = convertMovieRequestToMovie(movieRequest);
         movieRepository.save(movie);
         return convertMovieToMovieResponse(movie);
@@ -53,7 +55,6 @@ public class MovieService {
         if (movieRepository.existsByTitle(movieRequest.getTitle())) {
             throw new MovieAlreadyExistsException(movieRequest.getTitle());
         }
-
 
         // Update movie with the values received in the request
         movie.setTitle(movieRequest.getTitle());

@@ -30,6 +30,7 @@ public class GlobalExceptionHandler {
         return errors;
     }
 
+    // Handle Errors from Parsing Request body
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public Map<String, String> handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
         Throwable rootCause = ex.getCause();
@@ -89,6 +90,7 @@ public class GlobalExceptionHandler {
         return response;
     }
 
+    // Handle Logical Errors with dates (e.g. past, future, valid durations..)
     @ExceptionHandler(InvalidDateException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, String> handleInvalidDateException(InvalidDateException ex) {
@@ -97,6 +99,7 @@ public class GlobalExceptionHandler {
         return response;
     }
 
+    // Handle a showtime overlapping time exception (used in create & update of a showtime)
     @ExceptionHandler(ShowtimeOverlapException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public Map<String, String> handleShowtimeOverlapException(ShowtimeOverlapException ex) {
@@ -105,6 +108,7 @@ public class GlobalExceptionHandler {
         return response;
     }
 
+    // Handle Booking Duplication error (same showtimeId and seatNumber)
     @ExceptionHandler(BookingAlreadyExistsException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public Map<String, String> handleBookingAlreadyExistsException(BookingAlreadyExistsException ex) {
@@ -113,6 +117,7 @@ public class GlobalExceptionHandler {
         return response;
     }
 
+    // Private function, used by handleHttpMessageNotReadable, to simplify the error message
     private String mapToSimpleType(Class<?> clazz) {
         if (Number.class.isAssignableFrom(clazz)) {
             return "Numeric";  // Integer, Long, Float, Double, BigDecimal

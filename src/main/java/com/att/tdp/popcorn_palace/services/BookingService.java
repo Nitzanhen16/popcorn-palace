@@ -27,12 +27,15 @@ public class BookingService {
 
         Long showtimeID = showtime.getId();
         Integer seatNumber = bookingRequest.getSeatNumber();
+        // Check if there are any booking already for the same showtimeID and seatNumber
         Optional<Booking> existingBooking = bookingRepository.findByShowtimeAndSeat(showtimeID, seatNumber);
 
+        // if existing booking already exist, raise exception
         if (existingBooking.isPresent()) {
             throw new BookingAlreadyExistsException(showtimeID, seatNumber);
         }
 
+        // Save the new booking in DB and return it
         Booking booking = convertBookingRequestToBooking(bookingRequest, showtime);
         bookingRepository.save(booking);
         return convertBookingToBookingResponse(booking);
