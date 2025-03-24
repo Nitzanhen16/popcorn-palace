@@ -44,6 +44,10 @@ public class Booking {
         return uuid;
     }
 
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
+
     public Showtime getShowtime() {
         return showtime;
     }

@@ -14,6 +14,15 @@ public class BookingRequest {
     @NotNull(message = "User ID is required")
     private UUID userId;
 
+    public BookingRequest() {
+    }
+
+    public BookingRequest(Long showtimeId, Integer seatNumber, UUID userId) {
+        this.showtimeId = showtimeId;
+        this.seatNumber = seatNumber;
+        this.userId = userId;
+    }
+
     // Getters and Setters
     public Long getShowtimeId() {
         return showtimeId;
