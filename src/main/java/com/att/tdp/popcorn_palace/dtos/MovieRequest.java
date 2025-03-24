@@ -12,7 +12,7 @@ public class MovieRequest {
     private String title;
 
     @Nullable
-    @Size(min = 1,message = "Genre is required")
+    @Size(min = 1,message = "Movie's Genre is required")
     private String genre;
 
     @Nullable

@@ -2,7 +2,6 @@ package com.att.tdp.popcorn_palace.contollers;
 
 import com.att.tdp.popcorn_palace.dtos.MovieRequest;
 import com.att.tdp.popcorn_palace.dtos.MovieResponse;
-import com.att.tdp.popcorn_palace.models.Movie;
 import com.att.tdp.popcorn_palace.services.MovieService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,7 @@ public class MovieController {
         this.movieService = movieService;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<MovieResponse> getAllMovies() {
         return movieService.getAllMovies();
     }

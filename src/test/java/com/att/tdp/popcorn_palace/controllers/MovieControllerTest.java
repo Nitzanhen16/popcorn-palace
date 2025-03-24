@@ -53,7 +53,7 @@ public class MovieControllerTest {
         when(movieService.getAllMovies()).thenReturn(List.of(movieResponse));
 
         // when
-        ResultActions response = mockMvc.perform(get("/movies"));
+        ResultActions response = mockMvc.perform(get("/movies/all"));
 
         //then
         response.andExpect(status().isOk())
